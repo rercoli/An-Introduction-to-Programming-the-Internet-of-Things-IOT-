@@ -1,0 +1,43 @@
+/*
+
+Write a program that allows the user to control the LED connected to pin 13 of the Arduino. 
+When the program is started, the LED should be off. The user should open the serial monitor 
+to communicate with the Arduino. If the user sends the character '1' through the serial monitor 
+then the LED should turn on. If the user sends the character '0' through the serial monitor then 
+the LED should turn off. 
+
+  modified 10 April 2021
+  by Ercoli Riccardo
+
+*/
+
+String command;
+
+// the setup function runs once when you press reset or power the board
+void setup() {
+  // initialize serial.
+  Serial.begin(9600);
+  // initialize digital pin LED_BUILTIN as an output.
+  pinMode(LED_BUILTIN, OUTPUT);
+  // write pin LED_BUILTIN as low.
+  digitalWrite(LED_BUILTIN, LOW);
+}
+
+// the loop function runs over and over again forever
+void loop() {
+    if(Serial.available()){
+        command = Serial.readStringUntil('\n');
+         
+        if(command.equals("1")){
+             digitalWrite(LED_BUILTIN, HIGH);
+             Serial.println("You typed 1. Turn on L13");
+        }
+        else if(command.equals("0")){
+             digitalWrite(LED_BUILTIN, LOW);
+             Serial.println("You typed 0. Turn off L13");
+        }
+        else{
+            Serial.println("Invalid command. Type 0 or 1");
+        }
+    }
+}
